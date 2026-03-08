@@ -17,5 +17,5 @@ class PatientSchemaBase(SQLModel):
 class PatientSchemaResponse(PatientSchemaBase):
     id: int
 
-class PatientSchemasAppointments(PatientSchemaResponse):
+class PatientSchemaAppointments(PatientSchemaResponse):
     appointments: List[AppointmentSchemaResponse] = []
