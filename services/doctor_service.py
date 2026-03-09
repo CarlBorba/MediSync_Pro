@@ -37,11 +37,7 @@ class DoctorService:
     
     @staticmethod
     def update_doctor(doctor_id: int, doctor_data: DoctorSchemaBase, db: Session):
-        query = select(DoctorModel).where(DoctorModel.id == doctor_id)
-        doctor_up = db.exec(query).first()
-
-        if not doctor_up:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Doctor not found.")
+        doctor_up = DoctorService.get_doctor_by_id(doctor_id, db)
         
         doctor_data_dict = doctor_data.model_dump(exclude_unset=True)
         doctor_up.sqlmodel_update(doctor_data_dict)
