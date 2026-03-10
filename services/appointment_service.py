@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-
+from datetime import datetime
 from fastapi import HTTPException, status
 
 from schemas.appointment_schema import AppointmentSchemaBase
@@ -64,3 +64,31 @@ class AppointmentService:
         db.commit()
 
         return None
+    
+    @staticmethod
+    def complete_appointment(appointment_id: int, db: Session):
+        appointment = AppointmentService.get_ap_by_id(appointment_id, db)
+        
+        appointment.status = "Completed"
+        db.add(appointment)
+        db.commit()
+        db.refresh(appointment)
+
+        return appointment
+    
+    #Add this to the scheduling page to update.
+    @staticmethod
+    def auto_complete_past_appointments(db: Session):
+        now = datetime.now()
+        query = select(AppointmentModel).where(
+            AppointmentModel.status == "Pending",
+            (AppointmentModel.ap_date < now.date()) | 
+            ((AppointmentModel.ap_date == now.date()) & (AppointmentModel.ap_time < now.time()))
+        )
+        
+        past_appointments = db.exec(query).all()
+        for ap in past_appointments:
+            ap.status = "Completed"
+            db.add(ap)
+        
+        db.commit()
