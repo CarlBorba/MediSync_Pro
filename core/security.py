@@ -1,5 +1,6 @@
 from pwdlib import PasswordHash
 from datetime import timedelta, datetime, timezone
+from typing import Optional
 from core.configs import settings
 import jwt
 
@@ -12,8 +13,8 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 def get_password_hash(password: str):
     return password_hash.hash(password)
 
-def create_access_token(data: dict, expires_delta: timedelta):
-    to_encode = data.copy()
+def create_access_token(user_id: int, expires_delta: Optional[timedelta] = None):
+    to_encode = {"sub": str(user_id)}
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
     else:
