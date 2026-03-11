@@ -9,7 +9,7 @@ class PatientSchemaBase(SQLModel):
     age: int
     document_id: str = Field(index=True, unique=True)
     gender: str
-    mail: str
+    email: str
     phone: str
     historical: Optional[str] = None
     address: Optional[str] = None

@@ -8,8 +8,8 @@ from core.security import verify_password, DUMMY_HASH
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/users/login")
 
-def authenticate_user(db: Session, mail: str, password: str):
-    query = select(UserModel).where(UserModel.mail == mail)
+def authenticate_user(db: Session, email: str, password: str):
+    query = select(UserModel).where(UserModel.email == email)
     user = db.exec(query).first()
 
     if not user:

@@ -18,7 +18,7 @@ class TokenData(BaseModel):
     username: Optional[str] = None
 
 def get_user(db: Session, username: str):
-    query = select(UserModel).where(UserModel.mail == username)
+    query = select(UserModel).where(UserModel.email == username)
     user = db.exec(query).first()
 
     return user

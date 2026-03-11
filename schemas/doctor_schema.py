@@ -8,7 +8,7 @@ class DoctorSchemaBase(SQLModel):
     name: str
     crm: str = Field(unique=True, index=True)
     specialty: str = Field(index=True)
-    mail: str
+    email: str
     phone: str
 
 class DoctorSchemaResponse(DoctorSchemaBase):

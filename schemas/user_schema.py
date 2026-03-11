@@ -3,7 +3,7 @@ from sqlmodel import SQLModel
 
 class UserSchemaBase(SQLModel):
     name: str
-    mail: str
+    email: str
     is_admin: bool
 
 class UserSchemaCreate(UserSchemaBase):
