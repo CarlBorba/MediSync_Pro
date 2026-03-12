@@ -41,7 +41,7 @@ class UserService:
         return new_user
     
     @staticmethod
-    def get_user(db: Session):
+    def get_all_users(db: Session):
         query = select(UserModel)
         users = db.exec(query).all()
 
